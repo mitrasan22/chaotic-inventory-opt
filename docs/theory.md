@@ -173,14 +173,7 @@ Tradeoff:
 Hyperparameters $\theta$ are optimized by minimizing:
 
 $$
-J(\theta)
-=
-\mathbb{E}
-\left[
-\text{Cost}
-+ \eta_1 \cdot \text{Stockouts}
-+ \eta_2 \cdot \max(0, \text{ServiceLevel}^* - \text{ServiceLevel})
-\right]
+J(\theta) = \mathbb{E} \left[ \text{Cost} + \eta_1 \cdot \text{Stockouts} + \eta_2 \cdot \max(0, \text{ServiceLevel}^* - \text{ServiceLevel}) \right]
 $$
 
 This objective balances:
