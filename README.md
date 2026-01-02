@@ -99,29 +99,22 @@ FCIO does.
 
 ## 🌀 FCIO Control Law
 
-The **dynamic order-up-to level** is:
+The **dynamic order-up-to level is:
 
 $$
-S_t
-=
-S_0
-\cdot
-\exp
-\left(
-- \alpha \lambda_t
-+
-\beta (H_t - 0.5)
-\right)
+S_t = S_0 \cdot \exp\!\left(-\alpha \lambda_t + \beta (H_t - 0.5)\right)
 $$
 
 Where:
-- $S_0$ = baseline stock
-- $H_t$ = Hurst exponent
-- $\lambda_t$ = Lyapunov exponent
-- $\alpha$ = chaos damping gain
-- $\beta$ = fractal amplification gain
+
+- $S_0$ = baseline stock  
+- $H_t$ = Hurst exponent  
+- $\lambda_t$ = Lyapunov exponent  
+- $\alpha$ = chaos damping gain  
+- $\beta$ = fractal amplification gain  
 
 Orders are placed using a stabilized $(s_t, S_t)$ rule.
+
 
 ---
 
