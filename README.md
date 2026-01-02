@@ -152,20 +152,21 @@ $$
 J(\theta)
 =
 \text{Total Cost}
-+
-\eta_1 \cdot \text{Stockouts}
-+
-\eta_2 \cdot \max(0, SL^* - SL)
++ \eta_1 \cdot \text{Stockouts}
++ \eta_2 \cdot \max(0, SL^* - SL)
 $$
 
 Where:
+
 - $SL$ = service level  
 - $SL^*$ = target service level  
 
 This ensures:
-- low cost
-- high service
+
+- low cost  
+- high service  
 - stable dynamics
+
 
 ---
 
