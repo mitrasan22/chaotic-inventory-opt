@@ -1,0 +1,28 @@
+policy:
+  type: fcio
+  base_stock_level: 30
+  reorder_point: 10
+
+  alpha: 0.9
+  beta: 0.7
+  scale_min: 0.6
+  scale_max: 1.4
+  rho: 0.6
+  gamma: 1.4
+  k_cap: 0.8
+
+  window: 50
+
+system:
+  initial_inventory: 30
+
+cost:
+  holding_cost_per_unit: 0.1
+  stockout_cost_per_unit: 5.0
+  fixed_order_cost: 1.0
+
+data:
+  path: sales_train_validation.csv
+  item_id: FOODS_3_090
+  store_id: CA_1
+  num_skus: 500

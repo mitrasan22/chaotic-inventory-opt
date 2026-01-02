@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "chaotic-inventory-opt"
+version = "0.1.0"
+description = "Fractal–Chaotic Inventory Optimization (FCIO): stability-centric inventory control using chaos theory"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+    { name = "Santanu Mitra" }
+]
+keywords = [
+    "inventory-optimization",
+    "chaos-theory",
+    "fractal-analysis",
+    "supply-chain",
+    "control-systems"
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3"
+]
+
+requires-python = ">=3.10"
+
+dependencies = [
+    "numpy>=1.21",
+    "scipy>=1.8"
+]
+
+[project.optional-dependencies]
+wavelets = ["PyWavelets>=1.4"]
+rl = ["gymnasium>=0.28"]
+
+[project.urls]
+Homepage = "https://github.com/mitrasan22/chaotic-inventory-opt"
+Repository = "https://github.com/mitrasan22/chaotic-inventory-opt"
+Issues = "https://github.com/mitrasan22/chaotic-inventory-opt/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,18 @@
+policy:
+  type: sS
+  reorder_point: 10
+  order_up_to: 30
+
+system:
+  initial_inventory: 30
+
+cost:
+  holding_cost_per_unit: 0.1
+  stockout_cost_per_unit: 5.0
+  fixed_order_cost: 1.0
+
+data:
+  path: sales_train_validation.csv
+  item_id: FOODS_3_090
+  store_id: CA_1
+  num_skus: 500
