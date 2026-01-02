@@ -7,11 +7,11 @@
 
 We consider a discrete-time inventory system governed by:
 
-\[
+$$
 I_{t+1} = I_t + Q_t - D_t
-\]
+$$
 
-where \( I_t \) is inventory, \( Q_t \) is order quantity, and \( D_t \) is realized demand.
+where $I_t$ is inventory, $Q_t$ is order quantity, and $D_t$ is realized demand.
 
 The control objective is to minimize expected cumulative cost under non-stationary demand.
 
@@ -21,14 +21,14 @@ The control objective is to minimize expected cumulative cost under non-stationa
 
 Per-period cost:
 
-\[
+$$
 C_t =
 h \max(I_t, 0)
 + p \max(-I_t, 0)
 + k \mathbb{1}[Q_t > 0]
-\]
+$$
 
-where \( h \) is holding cost, \( p \) stockout penalty, and \( k \) fixed ordering cost.
+where $h$ is holding cost, $p$ stockout penalty, and $k$ fixed ordering cost.
 
 ---
 
@@ -44,14 +44,14 @@ Classical policies such as (s, S) and Base-Stock assume demand stationarity and 
 
 Demand exhibits long-range dependence when:
 
-\[
+$$
 \text{Cov}(D_t, D_{t+k}) \sim k^{2H-2}
-\]
+$$
 
-The **Hurst exponent** \( H \) controls memory depth.
+The **Hurst exponent** $H$ controls memory depth.
 
-- \( H > 0.5 \): persistence
-- \( H < 0.5 \): anti-persistence
+- $H > 0.5$: persistence  
+- $H < 0.5$: anti-persistence  
 
 ---
 
@@ -61,12 +61,13 @@ Inventory recursion defines a nonlinear dynamical system.
 
 The largest Lyapunov exponent:
 
-\[
-\lambda = \lim_{n \to \infty}
+$$
+\lambda =
+\lim_{n \to \infty}
 \frac{1}{n}
 \sum_{t=1}^{n}
 \log \left| \frac{\partial I_{t+1}}{\partial I_t} \right|
-\]
+$$
 
 measures sensitivity to perturbations.
 
@@ -78,7 +79,7 @@ measures sensitivity to perturbations.
 
 FCIO defines a **dynamic order-up-to level**:
 
-\[
+$$
 S_t =
 S_0
 \cdot
@@ -88,12 +89,12 @@ S_0
 +
 \beta (H_t - 0.5)
 \right)
-\]
+$$
 
 This equation introduces two primary hyperparameters:
 
-- **\( \alpha \)** — chaos damping gain  
-- **\( \beta \)** — fractal memory amplification gain  
+- **$\alpha$** — chaos damping gain  
+- **$\beta$** — fractal memory amplification gain  
 
 ---
 
@@ -107,14 +108,14 @@ To ensure stability, robustness, and generalization, FCIO introduces additional 
 
 The exponential response is bounded:
 
-\[
+$$
 S_t \leftarrow S_0 \cdot \min(\max(\exp(\cdot), s_{\min}), s_{\max})
-\]
+$$
 
 where:
 
-- `scale_min = s_{\min}` prevents under-ordering collapse
-- `scale_max = s_{\max}` prevents explosive inventory growth
+- `scale_min = s_{\min}` prevents under-ordering collapse  
+- `scale_max = s_{\max}` prevents explosive inventory growth  
 
 These bounds enforce **input-to-state stability**.
 
@@ -124,18 +125,19 @@ These bounds enforce **input-to-state stability**.
 
 Fractal and chaos estimators are noisy. FCIO applies exponential smoothing:
 
-\[
+$$
 \tilde{H}_t = \rho \tilde{H}_{t-1} + (1 - \rho) H_t
-\]
-\[
+$$
+
+$$
 \tilde{\lambda}_t = \rho \tilde{\lambda}_{t-1} + (1 - \rho) \lambda_t
-\]
+$$
 
 where:
 
-- \( \rho \in (0,1) \) controls estimator inertia
-- higher \( \rho \) → slower adaptation, higher robustness
-- lower \( \rho \) → faster reaction, higher variance
+- $\rho \in (0,1)$ controls estimator inertia  
+- higher $\rho$ → slower adaptation, higher robustness  
+- lower $\rho$ → faster reaction, higher variance  
 
 ---
 
@@ -143,15 +145,15 @@ where:
 
 Regime-aware scaling modifies the control signal:
 
-\[
+$$
 S_t^{(\text{regime})} = S_t \cdot g(\text{regime}; \gamma)
-\]
+$$
 
-where \( \gamma \) controls **how aggressively FCIO responds to detected instability**.
+where $\gamma$ controls **how aggressively FCIO responds to detected instability**.
 
-Higher \( \gamma \):
-- stronger suppression in chaotic regimes
-- stronger amplification in persistent regimes
+Higher $\gamma$:
+- stronger suppression in chaotic regimes  
+- stronger amplification in persistent regimes  
 
 ---
 
@@ -159,9 +161,9 @@ Higher \( \gamma \):
 
 To prevent multi-period accumulation, FCIO enforces:
 
-\[
+$$
 S_t \le S_{t-1} (1 + k_{\text{cap}})
-\]
+$$
 
 This limits **inter-temporal inventory acceleration**, ensuring bounded second-order dynamics.
 
@@ -169,32 +171,32 @@ This limits **inter-temporal inventory acceleration**, ensuring bounded second-o
 
 ### 7.5 Estimation Window: `window`
 
-All estimators operate on a rolling window of size \( W \):
+All estimators operate on a rolling window of size $W$:
 
-\[
+$$
 \{D_{t-W+1}, \dots, D_t\}
-\]
+$$
 
 Tradeoff:
-- small \( W \): responsive but noisy
-- large \( W \): stable but slow
+- small $W$: responsive but noisy  
+- large $W$: stable but slow  
 
 ---
 
 ## 8. Hyperparameter Optimization Objective
 
-Hyperparameters \( \theta \) are optimized by minimizing:
+Hyperparameters $\theta$ are optimized by minimizing:
 
-\[
+$$
 J(\theta)
 =
 \mathbb{E}
 \left[
 \text{Cost}
 + \eta_1 \cdot \text{Stockouts}
-+ \eta_2 \cdot \max(0, \text{ServiceLevel}^\* - \text{ServiceLevel})
++ \eta_2 \cdot \max(0, \text{ServiceLevel}^* - \text{ServiceLevel})
 \right]
-\]
+$$
 
 This objective balances:
 - efficiency
@@ -207,9 +209,9 @@ This objective balances:
 
 Since hyperparameters regulate **structural response**, not SKU identity:
 
-\[
-\theta^\* = \arg\min_\theta \mathbb{E}_{\text{SKU}} [ J(\theta) ]
-\]
+$$
+\theta^* = \arg\min_\theta \mathbb{E}_{\text{SKU}} [ J(\theta) ]
+$$
 
 They generalize across SKUs drawn from the same demand class.
 

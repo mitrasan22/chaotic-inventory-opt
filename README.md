@@ -49,14 +49,14 @@ into inventory decision-making.
 
 Inventory evolves as:
 
-\[
+$$
 I_{t+1} = I_t + Q_t - D_t
-\]
+$$
 
 Where:
-- \( I_t \) = inventory
-- \( Q_t \) = order quantity
-- \( D_t \) = realized demand
+- $I_t$ = inventory
+- $Q_t$ = order quantity
+- $D_t$ = realized demand
 
 ---
 
@@ -64,12 +64,12 @@ Where:
 
 Demand often exhibits **long-range dependence**:
 
-\[
+$$
 \text{Cov}(D_t, D_{t+k}) \sim k^{2H-2}
-\]
+$$
 
-- \( H > 0.5 \): persistent demand (bursts cluster)
-- \( H < 0.5 \): mean-reverting demand
+- $H > 0.5$: persistent demand (bursts cluster)
+- $H < 0.5$: mean-reverting demand
 
 FCIO **measures** this using rolling Hurst estimation.
 
@@ -81,17 +81,18 @@ Inventory control is a nonlinear dynamical system.
 
 The **largest Lyapunov exponent**:
 
-\[
-\lambda = \lim_{n \to \infty}
+$$
+\lambda =
+\lim_{n \to \infty}
 \frac{1}{n}
 \sum_{t=1}^{n}
 \log \left| \frac{\partial I_{t+1}}{\partial I_t} \right|
-\]
+$$
 
-- \( \lambda < 0 \): stable
-- \( \lambda > 0 \): chaotic (errors explode)
+- $\lambda < 0$: stable  
+- $\lambda > 0$: chaotic (errors explode)
 
-Classical policies **do not control** \( \lambda \).  
+Classical policies **do not control** $\lambda$.  
 FCIO does.
 
 ---
@@ -100,7 +101,7 @@ FCIO does.
 
 The **dynamic order-up-to level** is:
 
-\[
+$$
 S_t
 =
 S_0
@@ -111,16 +112,16 @@ S_0
 +
 \beta (H_t - 0.5)
 \right)
-\]
+$$
 
 Where:
-- \( S_0 \) = baseline stock
-- \( H_t \) = Hurst exponent
-- \( \lambda_t \) = Lyapunov exponent
-- \( \alpha \) = chaos damping gain
-- \( \beta \) = fractal amplification gain
+- $S_0$ = baseline stock
+- $H_t$ = Hurst exponent
+- $\lambda_t$ = Lyapunov exponent
+- $\alpha$ = chaos damping gain
+- $\beta$ = fractal amplification gain
 
-Orders are placed using a stabilized \((s_t, S_t)\) rule.
+Orders are placed using a stabilized $(s_t, S_t)$ rule.
 
 ---
 
@@ -154,7 +155,7 @@ FCIO uses **Optuna-based optimization** with:
 
 ### Optimization Objective
 
-\[
+$$
 J(\theta)
 =
 \text{Total Cost}
@@ -162,11 +163,11 @@ J(\theta)
 \eta_1 \cdot \text{Stockouts}
 +
 \eta_2 \cdot \max(0, SL^* - SL)
-\]
+$$
 
 Where:
-- \( SL \) = service level
-- \( SL^* \) = target service level
+- $SL$ = service level  
+- $SL^*$ = target service level  
 
 This ensures:
 - low cost
@@ -177,18 +178,45 @@ This ensures:
 
 ## 🏗️ Library Architecture
 
+```
 chaotic_inventory_opt/
 │
-├── core/ # Inventory system & cost models
-├── control/ # Classical & FCIO controllers
-├── fractal/ # Hurst, R/S, wavelet analysis
-├── chaos/ # Lyapunov, entropy, recurrence
-├── regimes/ # Regime classification
-├── evaluation/ # Cost, stability, robustness
-├── rl/ # (Optional) RL extensions
-├── utils/ # Validation & helpers
-
-
+├── core/              # Inventory system dynamics and cost models
+│   ├── inventory_system.py
+│   └── cost.py
+│
+├── control/           # Inventory control policies
+│   ├── classical.py   # (s,S), Base-Stock policies
+│   ├── fcio.py        # Fractal–Chaotic Inventory Optimization (FCIO)
+│   └── network.py     # Multi-SKU orchestration
+│
+├── fractal/           # Fractal demand analysis
+│   ├── hurst.py       # Hurst exponent estimation
+│   ├── rs_analysis.py # Rescaled range statistics
+│   └── wavelets.py    # Multi-scale energy analysis
+│
+├── chaos/             # Chaos theory diagnostics
+│   ├── lyapunov.py    # Largest Lyapunov exponent
+│   ├── entropy.py     # Entropy-based complexity measures
+│   └── recurrence.py # Recurrence plots and RQA metrics
+│
+├── regimes/           # Demand and stability regime classification
+│   └── classifier.py
+│
+├── evaluation/        # Metrics and validation
+│   ├── performance.py # Cost, service level, stockouts
+│   ├── stability.py   # Variance and Lyapunov stability
+│   └── robustness.py # Stress and sensitivity analysis
+│
+├── rl/                # (Optional) Reinforcement learning extensions
+│   ├── env.py         # Gym-compatible environment
+│   ├── reward.py      # Cost + stability-aware rewards
+│   └── agent.py       # PPO / DQN wrappers
+│
+├── utils/             # Utilities and helpers
+│   ├── rolling.py     # Rolling window operations
+│   └── validation.py  # Input and parameter validation
+```
 ---
 
 ## 📓 Notebooks (Reproducible Experiments)
