@@ -149,11 +149,7 @@ FCIO uses **Optuna-based optimization** with:
 ### Optimization Objective
 
 $$
-J(\theta)
-=
-\text{Total Cost}
-+ \eta_1 \cdot \text{Stockouts}
-+ \eta_2 \cdot \max(0, SL^* - SL)
+J(\theta) = \text{Total Cost} + \eta_1 \cdot \text{Stockouts} + \eta_2 \cdot \max(0, SL^* - SL)
 $$
 
 Where:
