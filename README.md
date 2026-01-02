@@ -159,9 +159,8 @@ $$
 Where:
 
 - $SL$ = service level  
-- $SL^*$ = target service level  
-
-
+- $SL^*$ = target service level
+ 
 This ensures:
 
 - low cost  
