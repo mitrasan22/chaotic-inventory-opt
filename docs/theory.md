@@ -22,10 +22,7 @@ The control objective is to minimize expected cumulative cost under non-stationa
 Per-period cost:
 
 $$
-C_t =
-h \max(I_t, 0)
-+ p \max(-I_t, 0)
-+ k \mathbb{1}[Q_t > 0]
+C_t = h \max(I_t, 0) + p \max(-I_t, 0) + k \mathbb{1}[Q_t > 0]
 $$
 
 where $h$ is holding cost, $p$ stockout penalty, and $k$ fixed ordering cost.
@@ -62,11 +59,7 @@ Inventory recursion defines a nonlinear dynamical system.
 The largest Lyapunov exponent:
 
 $$
-\lambda =
-\lim_{n \to \infty}
-\frac{1}{n}
-\sum_{t=1}^{n}
-\log \left| \frac{\partial I_{t+1}}{\partial I_t} \right|
+\lambda = \lim_{n \to \infty} \frac{1}{n} \sum_{t=1}^{n} \log \left| \frac{\partial I_{t+1}}{\partial I_t} \right|
 $$
 
 measures sensitivity to perturbations.
@@ -80,15 +73,7 @@ measures sensitivity to perturbations.
 FCIO defines a **dynamic order-up-to level**:
 
 $$
-S_t =
-S_0
-\cdot
-\exp
-\left(
--\alpha \lambda_t
-+
-\beta (H_t - 0.5)
-\right)
+S_t = S_0 \cdot \exp \left( -\alpha \lambda_t + \beta (H_t - 0.5) \right)
 $$
 
 This equation introduces two primary hyperparameters:

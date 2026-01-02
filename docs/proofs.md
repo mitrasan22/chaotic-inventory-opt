@@ -19,9 +19,7 @@ Then the FCIO inventory process is mean-square bounded.
 Using Lyapunov candidate $V(I_t) = I_t^2$:
 
 $$
-\mathbb{E}[V(I_{t+1}) - V(I_t)]
-=
-\mathbb{E}[(Q_t - D_t)^2 + 2I_t(Q_t - D_t)]
+\mathbb{E}[V(I_{t+1}) - V(I_t)] = \mathbb{E}[(Q_t - D_t)^2 + 2I_t(Q_t - D_t)]
 $$
 
 Since $Q_t \le S_t - I_t \le S_0 s_{\max}$, all higher-order terms are bounded.
@@ -61,12 +59,7 @@ For $\alpha > 1$, $\lambda_{\text{eff}} < 0$, ensuring exponential stability.
 Smoothing parameter $\rho$ reduces estimator variance:
 
 $$
-\text{Var}(\tilde{\lambda}_t)
-=
-(1 - \rho)^2
-\sum_{k=0}^{\infty}
-\rho^{2k}
-\text{Var}(\lambda_{t-k})
+\text{Var}(\tilde{\lambda}_t) = (1 - \rho)^2 \sum_{k=0}^{\infty} \rho^{2k} \text{Var}(\lambda_{t-k})
 $$
 
 Higher $\rho$ implies lower variance but slower adaptation.
